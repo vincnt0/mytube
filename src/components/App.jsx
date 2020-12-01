@@ -6,6 +6,8 @@ import {
   Link
 } from "react-router-dom";
 
+import Settings from './Settings';
+
 import "../styles/styles.css";
 
 export default function App({rootUrl}) {
@@ -37,7 +39,7 @@ export default function App({rootUrl}) {
                 <div>About</div>
               </Route>
               <Route path={rootUrl + "/"}>
-                <div>Settings</div>
+                <Settings />
               </Route>
             </Switch>
           </div>
