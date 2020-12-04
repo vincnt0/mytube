@@ -5,10 +5,13 @@ const path = require('path');
 
 module.exports = {
   mode: "production", // "production" | "development" | "none"
-  entry: "./src/index.js",
+  entry: {
+    options: "./src/options.js",
+    popup: "./src/popup.js",
+  },
   output: {
     path: path.resolve(__dirname, "./build"), 
-    filename: "bundle.js",
+    filename: "[name]-bundle.js",
   },
   devServer: {
     contentBase: "./build"
