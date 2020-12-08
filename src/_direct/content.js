@@ -4,7 +4,7 @@ setTimeout(() => {
   document.getElementById("related").remove();
 }, 1000)
 
-
+/*
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if(request.action === "switchAccount"){
     console.log("switching Account");
@@ -36,3 +36,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   }
 })
+*/

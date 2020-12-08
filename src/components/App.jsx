@@ -20,9 +20,9 @@ export default function App({rootUrl}) {
       <main>
         
         <Router>
-          <div class="main">
-            <nav class="nav-drawer">
-              <ul class="nav-list">
+          <div className="main">
+            <nav className="nav-drawer">
+              <ul className="nav-list">
                 <li>
                   <Link to={rootUrl + "/"}>Settings</Link>
                 </li>

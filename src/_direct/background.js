@@ -7,6 +7,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 })
 
+
+
+/*
 var linkContextItem = {
   "id": "mytube",
   "title": "MyTube",
@@ -21,3 +24,4 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
   }
 })
+*/

@@ -1,10 +1,9 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: "production", // "production" | "development" | "none"
+  mode: "development", // "production" | "development" | "none"
   entry: {
     options: "./src/options.js",
     popup: "./src/popup.js",
@@ -47,7 +46,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: "public" }
+        { from: "src/_direct" }
       ]
     })
   ],
