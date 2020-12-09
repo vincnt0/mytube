@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Settings from './Settings';
+import About from './About';
 
 import "../styles/styles.css";
 
@@ -14,7 +15,7 @@ export default function App({rootUrl}) {
   return (
     <>
       <header>
-        <img src="/icons/icon.png" class="icon"></img>
+        <img src="/icons/icon.png" className="icon"></img>
         <h1>MyTube</h1>
       </header>
       <main>
@@ -35,12 +36,8 @@ export default function App({rootUrl}) {
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
             <Switch>
-              <Route path={rootUrl + "/about"}>
-                <div>About</div>
-              </Route>
-              <Route path={rootUrl + "/"}>
-                <Settings />
-              </Route>
+              <Route path={rootUrl + "/about"}  component={About} />
+              <Route path={rootUrl + "/"}       component={Settings} />
             </Switch>
           </div>
         </Router>

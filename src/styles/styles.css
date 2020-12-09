@@ -64,3 +64,7 @@ main, #root, .main {
 .nav-list > li > a:hover {
   color: rgb(201, 12, 12);
 }
+
+.content-wrapper {
+  margin: 2em 2em 2em 2em;
+}
