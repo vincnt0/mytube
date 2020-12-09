@@ -30,6 +30,9 @@
   "permissions": [
     "tabs",
     "contextMenus",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
     "https://www.youtube.com/*"
   ]
 
