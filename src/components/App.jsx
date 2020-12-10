@@ -8,6 +8,7 @@ import {
 
 import ContentWrapper from './ContentWrapper';
 
+import TimeBlockerSettings from './settings/TimeBlocker';
 import GeneralSettings from './settings/General';
 import About from './About';
 
@@ -28,6 +29,9 @@ export default function App({rootUrl}) {
               <ul className="nav-list">
                 <li>
                   <Link to={rootUrl + "/"}>General</Link>
+                </li>
+                <li>
+                  <Link to={rootUrl + "/timeblocker"}>Timed Blocker</Link>
                 </li>
                 <li>
                   <Link to={rootUrl + "/about"}>About</Link>
