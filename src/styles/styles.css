@@ -17,6 +17,11 @@ header {
   background-color: rgba(50, 204, 255, 0.5);
 
   display: inline-flex;
+  align-items: center;
+}
+
+header > h1 {
+  margin-block-end: 0.34em;
 }
 
 .icon {
@@ -32,6 +37,10 @@ main, #root, .main {
   display: flex;
   flex-direction: row;
   flex-basis: content;
+}
+
+h1, h2, h3 {
+  margin-block-start: 0;
 }
 
 .nav-drawer {
@@ -67,4 +76,8 @@ main, #root, .main {
 
 .content-wrapper {
   margin: 2em 2em 2em 2em;
+}
+
+.large {
+  font-size: 1.25rem;
 }

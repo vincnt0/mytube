@@ -13,8 +13,18 @@ module.exports = {
     filename: "[name]-bundle.js",
   },
   devServer: {
-    contentBase: "./build"
+    contentBase: "./build",
+    historyApiFallback: {
+      rewrites: [
+        /**
+         * Since React Router uses virtual urls, this setting reroutes all suburls (like options.html/about)
+         * to the options.html. The virtual url is preserved through reload -> perfect hot reload
+         */
+        { from: /./, to: '/options.html' }  
+      ]
+    },
   },
+  devtool: "source-map",
   target: "web",
   resolve: {
     modules: ["node_modules"],
@@ -39,6 +49,14 @@ module.exports = {
         use: [
           'style-loader', 
           'css-loader'
+        ]
+      },
+
+      {
+        test: /\.md$/,
+        use: [
+          'html-loader',
+          'markdown-loader'
         ]
       }
     ],

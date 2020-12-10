@@ -6,7 +6,9 @@ import {
   Link
 } from "react-router-dom";
 
-import Settings from './Settings';
+import ContentWrapper from './ContentWrapper';
+
+import GeneralSettings from './settings/General';
 import About from './About';
 
 import "../styles/styles.css";
@@ -25,7 +27,7 @@ export default function App({rootUrl}) {
             <nav className="nav-drawer">
               <ul className="nav-list">
                 <li>
-                  <Link to={rootUrl + "/"}>Settings</Link>
+                  <Link to={rootUrl + "/"}>General</Link>
                 </li>
                 <li>
                   <Link to={rootUrl + "/about"}>About</Link>
@@ -36,8 +38,11 @@ export default function App({rootUrl}) {
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
             <Switch>
-              <Route path={rootUrl + "/about"}  component={About} />
-              <Route path={rootUrl + "/"}       component={Settings} />
+              <ContentWrapper>
+                <Route path={rootUrl + "/about"}        component={About} />
+                <Route path={rootUrl + "/timeblocker"}  component={TimeBlockerSettings} />
+                <Route path={rootUrl + "/"} exact       component={GeneralSettings} />
+              </ContentWrapper>
             </Switch>
           </div>
         </Router>
