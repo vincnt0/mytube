@@ -1,30 +1,17 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: "development", // "production" | "development" | "none"
   entry: {
     options: "./src/options.js",
     popup: "./src/popup.js",
+    content: "./src/content.js",
+    background: "./src/background.js",
   },
   output: {
     path: path.resolve(__dirname, "./build"), 
-    filename: "[name]-bundle.js",
+    filename: "[name].js",
   },
-  devServer: {
-    contentBase: "./build",
-    historyApiFallback: {
-      rewrites: [
-        /**
-         * Since React Router uses virtual urls, this setting reroutes all suburls (like options.html/about)
-         * to the options.html. The virtual url is preserved through reload -> perfect hot reload
-         */
-        { from: /./, to: '/options.html' }  
-      ]
-    },
-  },
-  devtool: "source-map",
   target: "web",
   resolve: {
     modules: ["node_modules"],

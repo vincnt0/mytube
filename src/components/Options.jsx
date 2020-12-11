@@ -14,7 +14,7 @@ import About from './About';
 
 import "../styles/styles.css";
 
-export default function App({rootUrl}) {
+export default function Options({rootUrl}) {
   return (
     <>
       <header>

@@ -1,5 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './components/App';
+import Options from './components/Options';
 
-ReactDOM.render(<App rootUrl="/options.html" />, document.getElementById('root'));
+ReactDOM.render(<Options rootUrl="/options.html" />, document.getElementById('root'));

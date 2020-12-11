@@ -1,6 +1,7 @@
 import * as React from 'react';
+import config from '../../config';
 
-const blocks_key = "timed_blocks";
+const blocks_key = config.storageKeys.timedBlocks;
 const save_msg_time = 2000; //in ms
 
 

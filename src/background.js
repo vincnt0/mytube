@@ -1,3 +1,7 @@
+import config from './config';
+
+const blocks_key = config.storageKeys.timedBlocks;
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if(request.action === "showPageAction"){
     console.log("showingPageAction")
@@ -20,7 +24,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
 })
 
-const blocks_key = "mytube-blocks";
 var blocks = [];
 
 chrome.storage.sync.get([blocks_key], result => {
@@ -52,6 +55,8 @@ function isBlocked(timestamp){
       }
     }
   })
+
+  console.log("Timestamp ", timestamp, " is blocked: ", blocked)
 
   return blocked;
 }
