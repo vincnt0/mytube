@@ -42,18 +42,27 @@ export default function TimeBlocker(){
 
 
   React.useEffect(() => { //executed on componentDidMount
+    var format = (number) => {
+      var string = number.toString();
+      if(string.length < 2) string = "0" + string;
+      return string;
+    }
     
     var parseTimeStamp = (stamp) => {
-      var hours = stamp / 24;
-      var minutes = stamp % 24;
+      var hours = format(Math.floor(stamp / 60));
+      var minutes = format(stamp % 60);
       return hours + ":" + minutes;
     }
+    
+    console.log("Effect triggered");
 
     chrome.storage?.sync.get([blocks_key], result => {
-      //console.log("Initializing blocks with ", result[blocks_key]);
+      console.log("Initializing blocks with ", result[blocks_key]);
       if(!!result[blocks_key]){
         setBlocks(result[blocks_key].map((block) => {
-          return {from: parseTimeStamp(block.from), to: parseTimeStamp(block.up)};
+          var parsed = {from: parseTimeStamp(block.from), to: parseTimeStamp(block.to)};
+          console.log("setting react internal state to: ", parsed);
+          return parsed;
         }
       ))}
     })

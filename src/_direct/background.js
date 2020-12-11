@@ -37,12 +37,33 @@ chrome.storage.sync.onChanged.addListener((changes, namespace) => {
   }
 })
 
+function isBlocked(timestamp){
+  var blocked = false;
+
+  blocks.forEach((block) => {
+    if(blocked) return;
+    if(block.from <= block.to){
+      if(block.from <= timestamp && timestamp <= block.to){
+        blocked = true;
+      }
+    }else{
+      if(block.from >= timestamp || timestamp >= block.to){
+        blocked = true;
+      }
+    }
+  })
+
+  return blocked;
+}
+
 function requestListener(page) {
   var now = new Date(Date.now());
-  var cancel = true;
-  //Enable between 21 and 1
-  if(now.getHours() < 2 || now.getHours() >= 21){
-    cancel = false;
+  var cancel = false;
+
+  // cancel request if current time is blocked
+  var timestamp = now.getHours() * 60 + now.getMinutes();
+  if(isBlocked(timestamp)){
+    cancel = true;
   }
 
   return {

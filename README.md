@@ -9,7 +9,7 @@ Block, filter, track and modify your YouTube experience to escape the algorithm'
 
 ### Features:
  - Removes "Recommended" Section
- - [WIP] Time Blocker: Block YouTube in specified time periods
+ - Time Blocker: Block YouTube in specified time periods
 
 ---
 
