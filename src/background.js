@@ -1,7 +1,9 @@
 import config from './config';
 
 const blocks_key = config.storageKeys.timedBlocks;
+const unblockTime = config.unblockTime;
 
+/*
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if(request.action === "showPageAction"){
     console.log("showingPageAction")
@@ -10,6 +12,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     })
   }
 })
+*/
 
 var iconContextItem = {
   "id": "mytube-icon",
@@ -19,10 +22,20 @@ var iconContextItem = {
 chrome.contextMenus.create(iconContextItem);
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if(info.id === iconContextItem.id){
+  if(info.menuItemId === iconContextItem.id){
     //Enable here
+    tempUnblocked = true;
+    setTimeout(() => {
+      tempUnblocked = false;
+    }, unblockTime)
   }
 })
+
+var tempUnblocked = false;
+
+function isUnblocked(){
+  return tempUnblocked;
+}
 
 var blocks = [];
 
@@ -71,6 +84,10 @@ function requestListener(page) {
     cancel = true;
   }
 
+  if(isUnblocked(page)){
+    cancel = false;
+  }
+
   return {
     cancel: cancel,
   };
@@ -81,20 +98,3 @@ chrome.webRequest.onBeforeRequest.addListener(
   { urls: ['https://www.youtube.com/*'] },
   ['blocking']
 );
-
-/*
-var linkContextItem = {
-  "id": "mytube",
-  "title": "MyTube",
-  "contexts": ["link"]
-};
-chrome.contextMenus.create(linkContextItem);
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if(info.id === linkContextItem.id){
-    console.log("info:", info, ", tab:", tab);
-    var {linkUrl, pageUrl} = info;
-
-  }
-})
-*/
