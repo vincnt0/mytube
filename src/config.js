@@ -2,5 +2,5 @@ export default {
   storageKeys: {
     timedBlocks: "timed_blocks"
   },
-  unblockTime: 5000
+  unblockTime: 15000
 }

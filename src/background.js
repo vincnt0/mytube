@@ -3,21 +3,12 @@ import config from './config';
 const blocks_key = config.storageKeys.timedBlocks;
 const unblockTime = config.unblockTime;
 
-/*
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if(request.action === "showPageAction"){
-    console.log("showingPageAction")
-    chrome.tabs.query({active:true, currentWindow:true}, (tabs) => {
-      chrome.pageAction.show(tabs[0].id);
-    })
-  }
-})
-*/
+//#region Temporary Enable
 
 var iconContextItem = {
   "id": "mytube-icon",
   "title": "Enable",
-  "contexts": ["page_action"]
+  "contexts": ["browser_action"]
 };
 chrome.contextMenus.create(iconContextItem);
 
@@ -33,9 +24,15 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 var tempUnblocked = false;
 
-function isUnblocked(){
+function isTempUnblocked(){
   return tempUnblocked;
 }
+
+//#endregion Temporary Enable
+
+
+
+//#region Timed Blocker
 
 var blocks = [];
 
@@ -69,28 +66,44 @@ function isBlocked(timestamp){
     }
   })
 
-  console.log("Timestamp ", timestamp, " is blocked: ", blocked)
+  //console.log("Timestamp ", timestamp, " is blocked: ", blocked)
 
   return blocked;
 }
 
+//#endregion Timed Blocker
+
+
+
+//#region Request Blocker
+
 function requestListener(page) {
+
   var now = new Date(Date.now());
-  var cancel = false;
+  var timestamp = now.getHours() * 60 + now.getMinutes();
+
+  const reject = { cancel: true };
+  const allow = { cancel: false };
+
+  // Allow all side requests
+  if(page.type !== "main_frame"){
+    console.log("Allowing side request: ", page.url);
+    return allow;
+  }
+  
+  if(isTempUnblocked()){
+    console.log("Temp Unblocked: ", page.url);
+    return allow;
+  }
 
   // cancel request if current time is blocked
-  var timestamp = now.getHours() * 60 + now.getMinutes();
   if(isBlocked(timestamp)){
-    cancel = true;
+    console.log(`Blocking: ${page.url}, (${page.method}, ${page.type})`);
+    return reject;
   }
 
-  if(isUnblocked(page)){
-    cancel = false;
-  }
-
-  return {
-    cancel: cancel,
-  };
+  console.log("Default Allow: ", page.url);
+  return allow;
 }
 
 chrome.webRequest.onBeforeRequest.addListener(
@@ -98,3 +111,5 @@ chrome.webRequest.onBeforeRequest.addListener(
   { urls: ['https://www.youtube.com/*'] },
   ['blocking']
 );
+
+//#endregion Request Blocker
