@@ -8,8 +8,9 @@ Block, filter, track and modify your YouTube experience to escape the algorithm'
 ---
 
 ### Features:
- - Removes "Recommended" Section
+ - Recommended Blocker: Removes "Recommended" Section
  - Time Blocker: Block YouTube in specified time periods
+ - Blocker Exception: Allow Access for some time during blocked period
 
 ---
 
@@ -18,5 +19,5 @@ Block, filter, track and modify your YouTube experience to escape the algorithm'
  - Habit Encouraging Videos: Automatically open/redirect to habit videos (like a meditation or exercise) at specified times of the day
  - Keyword Block: Block all videos with certain keywords or of certain channels
  - Restricted Mode: specify an extra set of blocks and rules
- - Block Exception: access site during blocked hours (optionally in restricted mode), maybe ask for reason and track reason and visited sites/videos
+ - Block Exception: maybe ask for reason and track reason and visited sites/videos
  - Account Selector: Manage and use multiple accounts, open and view videos with the correct account to train the algorithms of your accounts to specific things
