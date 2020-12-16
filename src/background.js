@@ -4,6 +4,9 @@ const blocks_key = config.storageKeys.timedBlocks;
 const unblock_key = config.storageKeys.tempUnblock;
 const unblockTime = config.unblockTime;
 
+const youtubeiMainRequests = config.blockedRequests.youtubei;
+const rootMainRequests = config.blockedRequests.root;
+
 //#region Temporary Enable
 
 var iconContextItem = {
@@ -97,6 +100,23 @@ function isBlocked(timestamp){
 
 //#region Request Blocker
 
+function isMainRequest(page) {
+  if(page.type === "main_frame") return true;
+  else if(page.type === "xmlhttprequest"){
+    var urlParts = page.url.split("?")[0].split("/"); //"https", "", "www.youtube.com", "youtubei", etc
+    switch(urlParts[3]){
+      case "youtubei":
+        if(youtubeiMainRequests.includes(urlParts[5])) 
+          return true;
+      break;
+      default:
+        if(rootMainRequests.includes(urlParts[3])) 
+          return true;
+      break;
+    }
+  }else return false;
+}
+
 function requestListener(page) {
 
   var now = new Date(Date.now());
@@ -106,7 +126,7 @@ function requestListener(page) {
   const allow = { cancel: false };
 
   // Allow all side requests
-  if(page.type !== "main_frame"){
+  if(!isMainRequest(page)){
     console.log("Allowing side request: ", page.url);
     return allow;
   }
