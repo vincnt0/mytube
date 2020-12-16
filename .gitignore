@@ -1,4 +1,6 @@
 build
 node_modules
-yarn-error.log
 reverse-engineering
+
+yarn-error.log
+*.pem
