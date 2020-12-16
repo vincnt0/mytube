@@ -19,7 +19,7 @@ export default function RecommendedBlocker() {
   }
 
   return <div className="recommended-blocker">
-    <div>Block Recommended Section: </div>
+    <div>Remove Recommended Section: </div>
     <input type="checkbox" checked={blockRecommended} onChange={change}></input>
   </div>
 }
