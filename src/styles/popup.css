@@ -1,0 +1,40 @@
+
+
+html, body {
+  width: 24rem;
+}
+
+header {
+  font-size: .8rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+main > div {
+  margin: .5em 1em;
+}
+
+.unblocker-body > input {
+  width: 4em;
+  margin: 0 .5em 0 .5em;
+}
+.unblocker-body > button {
+  margin: 0 1em;
+}
+
+.unblocker-header {
+  display: inline-flex;
+  width: 100%;
+}
+
+.unblocker-header > h3 {
+  width: fit-content;
+}
+.unblocker-header > div {
+  width: fit-content;
+  margin: .2em .75em;
+}

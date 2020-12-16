@@ -1,6 +1,7 @@
 import config from './config';
 
 const blocks_key = config.storageKeys.timedBlocks;
+const unblock_key = config.storageKeys.tempUnblock;
 const unblockTime = config.unblockTime;
 
 //#region Temporary Enable
@@ -24,8 +25,27 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 var tempUnblocked = false;
 
+var unblock = 0;
+
+chrome.storage.sync.get([unblock_key], result => {
+  console.log("Initial unblock from storage: ", result[unblock_key]);
+  unblock = result[unblock_key];
+})
+
+chrome.storage.sync.onChanged.addListener((changes, namespace) => {
+  for(var key in changes){
+    if(key === unblock_key){
+      console.log("Received new unblock from storage: ", unblock);
+      unblock = changes[key].newValue;
+    }
+  }
+})
+
+
 function isTempUnblocked(){
-  return tempUnblocked;
+  if(tempUnblocked) return true;
+  else if(Math.floor(Date.now() / 1000) < unblock) return true;
+  else return false;
 }
 
 //#endregion Temporary Enable

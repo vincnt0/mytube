@@ -9,7 +9,7 @@
     "16": "icons/16.png"
   },
   "options_page": "options.html",
-  "page_action":{
+  "browser_action":{
     "default_title": "MyTube",
     "default_icon": "icons/16.png",
     "default_popup": "popup.html"

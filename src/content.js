@@ -1,4 +1,3 @@
-chrome.runtime.sendMessage({action: "showPageAction"});
 
 setTimeout(() => {
   document.getElementById("related").remove();
