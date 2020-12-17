@@ -2,103 +2,47 @@ import config from './config';
 
 const blocks_key = config.storageKeys.timedBlocks;
 const unblock_key = config.storageKeys.tempUnblock;
-const unblockTime = config.unblockTime;
 
 const youtubeiMainRequests = config.blockedRequests.youtubei;
 const rootMainRequests = config.blockedRequests.root;
 
-//#region Temporary Enable
-
-var iconContextItem = {
-  "id": "mytube-icon",
-  "title": "Enable",
-  "contexts": ["browser_action"]
-};
-chrome.contextMenus.create(iconContextItem);
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if(info.menuItemId === iconContextItem.id){
-    //Enable here
-    tempUnblocked = true;
-    setTimeout(() => {
-      tempUnblocked = false;
-    }, unblockTime)
-  }
-})
-
-var tempUnblocked = false;
-
-var unblock = 0;
-
-chrome.storage.sync.get([unblock_key], result => {
-  console.log("Initial unblock from storage: ", result[unblock_key]);
-  unblock = result[unblock_key];
-})
-
-chrome.storage.sync.onChanged.addListener((changes, namespace) => {
-  for(var key in changes){
-    if(key === unblock_key){
-      console.log("Received new unblock from storage: ", unblock);
-      unblock = changes[key].newValue;
-    }
-  }
-})
-
-
 function isTempUnblocked(){
-  if(tempUnblocked) return true;
-  else if(Math.floor(Date.now() / 1000) < unblock) return true;
-  else return false;
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get([unblock_key], result => {
+      var unblock = result[unblock_key];
+      console.log("Unblock from storage: ", unblock);
+      // resolve to true if unblock timestamp has not passed yet
+      if(!unblock || unblock <= 0) resolve(false);
+      else if(Math.floor(Date.now() / 1000) < unblock) resolve(true);
+      else resolve(false);
+    })
+  })
 }
-
-//#endregion Temporary Enable
-
-
-
-//#region Timed Blocker
-
-var blocks = [];
-
-chrome.storage.sync.get([blocks_key], result => {
-  console.log("Initial blocks from storage: ", result[blocks_key]);
-  blocks = result[blocks_key];
-})
-
-chrome.storage.sync.onChanged.addListener((changes, namespace) => {
-  for(var key in changes){
-    if(key === blocks_key){
-      console.log("Received new blocks from storage: ", blocks);
-      blocks = changes[key].newValue;
-    }
-  }
-})
 
 function isBlocked(timestamp){
-  var blocked = false;
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get([blocks_key], result => {
+      var blocks = result[blocks_key];
+      console.log("Blocks from storage: ", blocks);
+      var blocked = false;
 
-  blocks.forEach((block) => {
-    if(blocked) return;
-    if(block.from <= block.to){
-      if(block.from <= timestamp && timestamp <= block.to){
-        blocked = true;
-      }
-    }else{
-      if(block.from >= timestamp || timestamp >= block.to){
-        blocked = true;
-      }
-    }
+      blocks.forEach((block) => {
+        if(blocked) return;
+        if(block.from <= block.to){
+          if(block.from <= timestamp && timestamp <= block.to){
+            blocked = true;
+          }
+        }else{
+          if(block.from >= timestamp || timestamp >= block.to){
+            blocked = true;
+          }
+        }
+      })
+
+      resolve(blocked);
+    })
   })
-
-  //console.log("Timestamp ", timestamp, " is blocked: ", blocked)
-
-  return blocked;
 }
-
-//#endregion Timed Blocker
-
-
-
-//#region Request Blocker
 
 function isMainRequest(page) {
   if(page.type === "main_frame") return true;
@@ -117,7 +61,8 @@ function isMainRequest(page) {
   }else return false;
 }
 
-function requestListener(page) {
+
+async function requestListener(page) {
 
   var now = new Date(Date.now());
   var timestamp = now.getHours() * 60 + now.getMinutes();
@@ -131,13 +76,13 @@ function requestListener(page) {
     return allow;
   }
   
-  if(isTempUnblocked()){
+  if(await isTempUnblocked()){
     console.log("Temp Unblocked: ", page.url);
     return allow;
   }
 
   // cancel request if current time is blocked
-  if(isBlocked(timestamp)){
+  if(await isBlocked(timestamp)){
     console.log(`Blocking: ${page.url}, (${page.method}, ${page.type})`);
     return reject;
   }
@@ -151,5 +96,3 @@ chrome.webRequest.onBeforeRequest.addListener(
   { urls: ['https://www.youtube.com/*'] },
   ['blocking']
 );
-
-//#endregion Request Blocker

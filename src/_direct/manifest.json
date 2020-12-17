@@ -1,7 +1,7 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "MyTube",
-  "version": "0.1",
+  "version": "0.3",
   "author": "vincnt0",
   "icons": {
     "128": "icons/128.png",
@@ -9,14 +9,13 @@
     "16": "icons/16.png"
   },
   "options_page": "options.html",
-  "browser_action":{
+  "action":{
     "default_title": "MyTube",
     "default_icon": "icons/16.png",
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": true
+    "service_worker": "background.js"
   },
 
   "content_scripts": [
@@ -26,14 +25,15 @@
       "js": ["content.js"]
     }
   ],
-
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
   "permissions": [
     "tabs",
     "contextMenus",
     "webRequest",
     "webRequestBlocking",
-    "storage",
-    "https://www.youtube.com/*"
+    "storage"
   ]
 
 }
