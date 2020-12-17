@@ -4,6 +4,7 @@ import '../styles/styles.css';
 import '../styles/popup.css';
 import TempUnblocker from './settings/TempUnblocker';
 import RecommendedBlocker from './settings/RecommendedBlocker';
+import TimeTracker from './settings/TimeTracker';
 
 export default function Popup(){
   return <>
@@ -14,9 +15,11 @@ export default function Popup(){
 
     <main>
       <div>
-        <RecommendedBlocker/>
+        <TimeTracker/>
         <hr/>
         <TempUnblocker/>
+        <hr/>
+        <RecommendedBlocker/>
         <hr/>
       </div>
     </main>

@@ -46,3 +46,18 @@ main > div {
 .recommended-blocker > input {
   margin: 0.4em 0 0 1em;
 }
+
+.timetracker {
+  display: inline-flex;
+}
+
+.timetracker-title {
+  margin-block-start: 0.25em;
+  margin-block-end: 0;
+}
+
+.timetracker-display {
+  font-size: 1.25rem;
+  margin-block-start: 0.15em;
+  margin-inline-start: 1em;
+}
