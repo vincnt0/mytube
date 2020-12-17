@@ -8,5 +8,5 @@ export default {
     youtubei: ["browse"], //youtubei api requests with this key get blocked
     root: ["watch"]       //root requests to youtube.com/{value} get blocked
   },
-  unblockTime: 15000
+  defaultUnblockTime: 5  //in mins
 }

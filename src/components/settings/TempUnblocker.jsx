@@ -2,10 +2,11 @@ import * as React from 'react';
 import config from '../../config';
 
 const unblock_key = config.storageKeys.tempUnblock;
+const default_unblock_time = config.defaultUnblockTime;
 
 export default function TempUnblocker(){
   var [unblock, setUnblock] = React.useState(0);
-  var [unblockMins, setUnblockMins] = React.useState(0);
+  var [unblockMins, setUnblockMins] = React.useState(default_unblock_time);
   var [intervalId, setIntervalId] = React.useState();
 
   React.useEffect(() => {

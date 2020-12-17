@@ -1,5 +1,6 @@
 import * as React from 'react';
 import config from '../../config';
+import format from '../../utils/format';
 
 const blocks_key = config.storageKeys.timedBlocks;
 const save_msg_time = 2000; //in ms
@@ -43,11 +44,6 @@ export default function TimeBlocker(){
 
 
   React.useEffect(() => { //executed on componentDidMount
-    var format = (number) => {
-      var string = number.toString();
-      if(string.length < 2) string = "0" + string;
-      return string;
-    }
     
     var parseTimeStamp = (stamp) => {
       var hours = format(Math.floor(stamp / 60));
