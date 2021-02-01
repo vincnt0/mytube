@@ -28,6 +28,7 @@
   ],
 
   "permissions": [
+    "background",
     "tabs",
     "contextMenus",
     "webRequest",

@@ -4,7 +4,7 @@ import format from '../../utils/format';
 import '../../styles/popup.css';
 
 export default function TimeTracker(){
-  var [time, setTime] = React.useState(60);
+  var [time, setTime] = React.useState(0);
 
   React.useEffect(() => {
     //retrieve tracked data from storage and display 
